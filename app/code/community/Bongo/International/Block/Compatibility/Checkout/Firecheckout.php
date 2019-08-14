@@ -1,0 +1,5 @@
+<?php
+
+class Bongo_International_Block_Compatibility_Checkout_Firecheckout extends Bongo_International_Block_Compatibility_Checkout {
+
+}

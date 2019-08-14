@@ -1,0 +1,110 @@
+<?php $_order = $this->getOrder() ?>
+<?php if ($this->getIsEnabled($_order->getStoreId()) && $_order->getBongoId()): ?>
+<div id="bongo_international_order_info" style="display:none">
+<div class="box-left">
+    <!--Order Information-->
+    <div class="entry-edit">
+        <div class="entry-edit-head">
+            <h4 class="icon-head head-account">Bongo Order Information</h4>
+        </div>
+        <div class="fieldset">
+            <table cellspacing="0" class="form-list">
+            <tr>
+                <td class="label"><label>Bongo Order ID</label></td>
+                <td class="value"><strong><?php echo $_order->getBongoId(); ?></strong></td>
+            </tr>
+            <tr>
+                <td class="label"><label>Unified Tracking Link</label></td>
+                <td class="value"><strong><a href="<?php echo $_order->getBongoTracking(); ?>" target="_blank"><?php echo $_order->getBongoTracking(); ?></a></strong></td>
+            </tr>
+            <?php $domestic_tracking = unserialize($_order->getBongoTrackingDomestic()); ?>
+            <?php if (is_array($domestic_tracking) && count($domestic_tracking)>0): ?>
+            <tr>
+                <td class="label"><label>Domestic Tracking Number(s)</label></td>
+                <td class="value"><strong><?php echo implode(", ", $domestic_tracking); ?></strong></td>
+            </tr>
+            <?php endif; ?>
+            <tr>
+                <td class="label"><label>Latest Status from Bongo</label></td>
+                <td class="value"><strong><?php echo $_order->getBongoStatusCode(); ?></strong></td>
+            </tr>
+            <tr>
+                <td class="label"><label>Latest Status Update</label></td>
+                <td class="value"><strong><?php echo $_order->getBongoStatusDate(); ?></strong></td>
+            </tr>
+            <tr>
+            	<td colspan="2">&nbsp;</td>
+            </tr>
+            <tr>
+                <td class="label"><label>Order Subtotal</label></td>
+                <td class="value"><strong><?php echo Mage::helper('core')->currency($_order->getBongoTotalsSubtotal()); ?></strong></td>
+            </tr>
+            <tr>
+                <td class="label"><label>Domestic Shipping Cost</label></td>
+                <td class="value"><strong><?php echo Mage::helper('core')->currency($_order->getBongoTotalsDomestic()); ?></strong></td>
+            </tr>
+            <tr>
+                <td class="label"><label>International Shipping Cost</label></td>
+                <td class="value"><strong><?php echo Mage::helper('core')->currency($_order->getBongoTotalsShipping()); ?></strong></td>
+            </tr>
+            <tr>
+                <td class="label"><label>International Shipping Duties</label></td>
+                <td class="value"><strong><?php echo Mage::helper('core')->currency($_order->getBongoTotalsDuty()); ?></strong></td>
+            </tr>
+            <tr>
+                <td class="label"><label>International Shipping Tax</label></td>
+                <td class="value"><strong><?php echo Mage::helper('core')->currency($_order->getBongoTotalsTax()); ?></strong></td>
+            </tr>
+            <tr>
+                <td class="label"><label>International Insurance Cost</label></td>
+                <td class="value"><strong><?php echo Mage::helper('core')->currency($_order->getBongoTotalsInsurance()); ?></strong></td>
+            </tr>
+            <tr>
+                <td class="label"><label>Grand Total</label></td>
+                <td class="value"><strong><?php echo Mage::helper('core')->currency($_order->getBongoTotalsTotal()); ?></strong></td>
+            </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="box-right">
+    <!--History Information-->
+    <div class="entry-edit">
+        <div class="entry-edit-head">
+            <h4 class="icon-head head-account">Bongo Order Status History</h4>
+        </div>
+        <div class="fieldset">
+            <ul class="note-list">
+            	<?php $i=0; ?>
+            	<?php foreach ($this->getOrderStatusHistory($_order->getId()) as $history): ?>
+            	<?php $i++; ?>
+            	<li>
+            		<strong><?php echo date('M j, Y', strtotime($history->getCreatedAt())) ?></strong>
+            		<?php echo date('g:i:s A', strtotime($history->getCreatedAt())) ?><span class="separator">|</span><strong><?php echo $history->getCode() ?></strong>
+                            <br/><?php echo $history->getNotes() ?>
+                </li>
+            	<?php endforeach; ?>
+            </ul>
+            <?php if ($i<1): ?>
+            No order status history is available from Bongo yet.
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
+<div class="clear"></div>
+</div>
+<script type="text/javascript">
+<!--
+document.observe('dom:loaded', function(){
+	$('order-messages').insert({after: $('bongo_international_order_info').innerHTML});
+	
+	/*$$('div.box-right').findAll(function(e){
+		if(e.innerHTML.indexOf('<!--Account Information-->') != -1){
+			e.removeClassName('box-right');
+			e.addClassName('box-left');
+		}
+	});*/
+});
+// -->
+</script>
+<?php endif; ?>

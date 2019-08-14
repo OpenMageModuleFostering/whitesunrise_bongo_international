@@ -1,0 +1,67 @@
+<?php
+if ($this->getIsEnabled ()) :
+	$current_country = $this->getCurrentCountry ();
+	
+	if (empty ( $current_country )) :
+		$countries = $this->getCountries ();
+		$current_country = $this->getGeoCountry ();
+		$default_country = $this->getDefaultCountry ();
+		
+		if (! empty ( $current_country ) && $current_country !== $default_country && array_key_exists ( $current_country, $countries )) :
+			?>
+<div id="bongo_welcome_lightbox" title="Welcome!">
+<div id="bongo_welcome_lightbox_text"><?php
+			echo str_replace ( '{COUNTRY}', $countries [$current_country] ['name'], Mage::getStoreConfig ( 'bongointernational_config/currency/welcome_lightbox_contents' ) );
+			?></div>
+<div class="form-language"><select
+	onchange="window.location.href=this.value"
+	name="bongo-country-selector-lightbox" id="bongo-country-selector-lightbox">
+        <?php
+			foreach ( $countries as $_code => $_country ) :
+				?>
+        <option
+		value="<?php
+				echo $this->getCountrySwitchUrl ( $_code, $_country );
+				?>"
+		<?php
+				if ($_code == $current_country) :
+					?>
+		selected="SELECTED" 
+				<?php endif;
+				?>>
+            <?php
+				echo $_country ['name'];
+				?>
+        </option>
+        <?php
+			endforeach
+			;
+			?>
+    </select></div>
+</div>
+<script type="text/javascript">window.jQuery || document.write('<script type="text/javascript" src="//code.jquery.com/jquery-1.11.1.min.js"><\/script><script>$.noConflict()<\/script>')</script>
+<script type="text/javascript">window.jQuery.ui || document.write('<script type="text/javascript" src="//code.jquery.com/ui/1.11.1/jquery-ui.min.js"><\/script><link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/south-street/jquery-ui.css" />')</script>
+<script type="text/javascript">
+<!--
+jQuery( document ).ready(function( $ ) {
+	function setCountry() {
+		window.location.href=$('#bongo-country-selector-lightbox').val();
+		$( "#bongo_welcome_lightbox" ).dialog( "close" )
+	}
+	
+	$( "#bongo_welcome_lightbox" ).dialog({
+	    modal: true,
+	    buttons: {
+	        Ok: setCountry
+	    },
+	    close: setCountry
+	});
+});
+// -->
+</script>
+		<?php endif;
+		?>
+	<?php endif;
+	?>
+<?php endif;
+?>

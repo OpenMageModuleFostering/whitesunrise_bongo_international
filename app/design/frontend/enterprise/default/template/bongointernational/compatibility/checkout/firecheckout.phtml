@@ -1,0 +1,110 @@
+<?php if ($this->getIsEnabled ()) : ?>
+<style type="text/css">
+<!--
+#bongo_checkout_payment_method_load {
+	padding:5px 10px;
+	font-weight:bold;
+}
+-->
+</style>
+<script type="text/javascript">
+//<![CDATA[
+var __bongo_hide_checkout_review_int;
+
+function bongoHideCheckoutReview(direct) {
+	if (direct != true && checkout.loadWaiting != undefined && checkout.loadWaiting == true) {
+		return false;
+	}
+
+	if ($('payment-method-review') != undefined) {
+		$('payment-method-review').hide();
+	}
+	
+	var last_total = $$('#checkout-review-table tfoot tr').last();
+	
+	if (last_total.down('td').innerHTML.search(/total incl/i) != -1) {
+		last_total.hide();
+	}
+}
+
+function bongoUpdateCheckout() {
+	var country_id = $('shipping:country_id') != undefined && $('shipping:country_id').value != null && $('shipping:same_as_billing').checked != true ? $('shipping:country_id').value : $('billing:country_id').value;
+
+	if (__bongo_allowed_countries.indexOf(country_id) !== -1) {
+		if ($('bongo_checkout_payment_method_load') != undefined) {
+			$('bongo_checkout_payment_method_load').show();
+		} else {
+			$('checkout-payment-method-load').insert({ before: '<div id="bongo_checkout_payment_method_load"><span>Bongo International</span></div>' });
+		}
+			
+		$('checkout-payment-method-load').hide();
+
+		if ($('checkout-coupon-discount-load') != undefined) {
+			$('checkout-coupon-discount-load').hide();
+		}
+
+		if ($('checkout-additional') != undefined) {
+			$('checkout-additional').hide();
+			$$('#checkout-review div.block-title span.num').first().update('4');
+		}
+
+		bongoHideCheckoutReview(true);
+		
+		__bongo_hide_checkout_review_int = setInterval(bongoHideCheckoutReview, 500);
+		
+		return false;
+	} else {
+		if ($('bongo_checkout_payment_method_load') != undefined) {
+			$('bongo_checkout_payment_method_load').hide();
+		}
+
+		$('checkout-payment-method-load').show();
+
+		if ($('checkout-coupon-discount-load') != undefined) {
+			$('checkout-coupon-discount-load').show();
+		}
+
+		if ($('checkout-additional') != undefined) {
+			$('checkout-additional').show();
+			$$('div#checkout-review div.block-title span.num').first().update('5');
+		}
+
+		if ($('payment-method-review') != undefined) {
+			$('payment-method-review').hide();
+		}
+
+		var last_total = $$('#checkout-review-table tfoot tr').last();
+		
+		if (last_total.down('td').innerHTML.search(/total incl/i) != -1) {
+			last_total.show();
+		}
+
+		clearInterval(__bongo_hide_checkout_review_int);
+	}
+}
+
+if ($('firecheckout-form') != undefined && $('bongo_form') != undefined) {
+	$('billing:country_id').observe('change', bongoUpdateCheckout);
+	$('shipping:country_id').observe('change', bongoUpdateCheckout);
+	$('shipping:same_as_billing').observe('change', bongoUpdateCheckout);
+	
+	bongoUpdateCheckout();
+	
+	$$('#review-buttons-container button').first().writeAttribute('onclick', null);
+	$$('#review-buttons-container button').first().observe('click', function() {
+		var country_id = $('shipping:country_id') != undefined && $('shipping:country_id').value != null && $('shipping:same_as_billing').checked != true ? $('shipping:country_id').value : $('billing:country_id').value;
+
+		if (__bongo_allowed_countries.indexOf(country_id) !== -1) {
+			$('bongo_form').submit();
+			
+			return false;
+		} else {
+			checkout.save();
+		}
+
+		return false;
+	});
+}
+//]]>
+</script>
+<?php endif; ?>

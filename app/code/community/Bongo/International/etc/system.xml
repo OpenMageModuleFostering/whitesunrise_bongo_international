@@ -1,0 +1,588 @@
+<?xml version="1.0"?>
+<config>
+	<tabs>
+		<bongointernationalsetup translate="label" module="bongointernational">
+			<label>Bongo International</label>
+			<sort_order>210</sort_order>
+		</bongointernationalsetup>
+	</tabs>
+	<sections>
+		<bongointernational_config translate="label" module="bongointernational">
+			<label>Configuration</label>
+			<tab>bongointernationalsetup</tab>
+			<sort_order>1000</sort_order>
+			<show_in_default>1</show_in_default>
+			<show_in_website>1</show_in_website>
+			<show_in_store>1</show_in_store>
+			<groups>
+				<config translate="label">
+					<label>General Configuration</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>1</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<active translate="label">
+							<label>Enabled</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>1</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment><![CDATA[
+                        <script type="text/javascript">
+                            var bongoToggleFields = function() {
+                                if ($('bongointernational_config_config_integration_type').getValue() == "1") {
+                                    $('bongointernational_config_config_api_key').up(1).fade();
+                                    $('bongointernational_config_config_country_manufacture').up(1).fade();
+                                    $('bongointernational_config_config_shipping_type').up(1).fade();
+                                    $('bongointernational_config_config_domestic_shipping').up(1).fade();
+                                    //$('bongointernational_config_config_landed_cost_usd').up(1).fade();
+                                    $('bongointernational_config_config_shipping_methods').up(1).fade();
+                                    $('bongointernational_config_config_allow_countries').up(1).fade();
+                                    $('bongointernational_config_dc').up(0).fade();
+                                } else {
+                                    $('bongointernational_config_config_api_key').up(1).appear();
+                                    $('bongointernational_config_config_country_manufacture').up(1).appear();
+                                    $('bongointernational_config_config_shipping_type').up(1).appear();
+                                    
+                                    if ($('bongointernational_config_config_shipping_type').getValue() == "bongointernational_manual") {
+                                    	$('bongointernational_config_config_domestic_shipping').up(1).appear();
+                                    } else {
+                                    	$('bongointernational_config_config_domestic_shipping').up(1).fade();
+                                    }
+                                    
+                                    //$('bongointernational_config_config_landed_cost_usd').up(1).appear();
+                                    $('bongointernational_config_config_shipping_methods').up(1).appear();
+                                    $('bongointernational_config_config_allow_countries').up(1).appear();
+                                    $('bongointernational_config_dc').up(0).appear();
+                                }
+                                
+                                if ($('bongointernational_config_config_integration_type').getValue() == "2") {
+                                	$('bongointernational_config_currency').up(0).appear();
+                                } else {
+                                	$('bongointernational_config_currency').up(0).fade();
+                                }
+                            }
+                            
+                            var bongoToggleDomestic = function() {
+                                if ($('bongointernational_config_config_shipping_type').getValue() == "bongointernational_manual") {
+                                    $('bongointernational_config_config_domestic_shipping').up(1).appear();
+                                } else {
+                                	$('bongointernational_config_config_domestic_shipping').up(1).fade();
+                                }
+                            }
+
+                            Event.observe(window, 'load', function() {
+                                Event.observe('bongointernational_config_config_integration_type', 'change', bongoToggleFields);
+                                Event.observe('bongointernational_config_config_shipping_type', 'change', bongoToggleDomestic);
+                                bongoToggleFields();
+                            });
+                        </script>
+                    		]]></comment>
+						</active>
+						<integration_type translate="label">
+							<label>Integration Type</label>
+							<frontend_type>select</frontend_type>
+							<source_model>bongointernational/adminhtml_integrationType
+							</source_model>
+							<sort_order>2</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment><![CDATA[<!-- <b>Bongo Extend:</b> Simple shopping cart plug-in that enables international shoppers to obtain EU and US shipping addresses and make purchases from your eCommerce store immediately.<br /> --><b>Bongo Checkout:</b> Modular eCommerce solution promotes safe acceptance of international eCommerce orders with guaranteed fraud protection.<br /><b>Bongo Export:</b> Fully integrated eCommerce solution provides a seamless shopping experience for international customers while maintaining merchant brand integrity.]]></comment>
+						</integration_type>
+						<!-- <extend_code translate="label">
+							<depends>
+								<integration_type>1</integration_type>
+							</depends>
+							<label>Bongo Extend Code</label>
+							<frontend_type>textarea</frontend_type>
+							<sort_order>3</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</extend_code> -->
+						<api_key translate="label">
+							<label>Bongo API Key</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>4</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</api_key>
+						<checkout_url translate="label">
+							<depends>
+								<integration_type>2</integration_type>
+							</depends>
+							<label>Bongo International Checkout URL</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>5</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</checkout_url>
+						<callback_url translate="label">
+							<depends>
+								<integration_type>2</integration_type>
+							</depends>
+							<label>Magento Callback URL</label>
+							<frontend_type>text</frontend_type>
+							<frontend_model>bongointernational/adminhtml_callbackUrl</frontend_model>
+							<sort_order>6</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment><![CDATA[Copy and paste the above Callback URL into your Bongo International Partner Portal under <i>Implementation-&#62;Step 3: Orders-&#62;Http Notification-&#62;Callback Url</i> and make sure to check the box next to <i>Activate service</i>, then click the <i>Save / Update</i> button.]]></comment>
+						</callback_url>
+						<continue_url translate="label">
+							<depends>
+								<integration_type>2</integration_type>
+							</depends>
+							<label>Magento Continue Shopping URL</label>
+							<frontend_type>text</frontend_type>
+							<frontend_model>bongointernational/adminhtml_continueUrl</frontend_model>
+							<sort_order>7</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment><![CDATA[Copy and paste the above Continue Shopping URL into your Bongo International Partner Portal under <i>Configure-&#62;Tracking/Confirmation-&#62;Continue Shopping / Go Back URL</i>, then click the <i>save</i> button.]]></comment>
+						</continue_url>
+						<continue_msg translate="label">
+							<depends>
+								<integration_type>2</integration_type>
+							</depends>
+							<label>Magento Continue Shopping Message</label>
+							<frontend_type>textarea</frontend_type>
+							<sort_order>8</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment><![CDATA[This is the message that will be displayed to the customer after they are redirected to your store from Bongo.  By default, this message is to inform the customer of a delay of up to 10 minutes for them to receive their order confirmation email and to see the order in their order history.]]></comment>
+						</continue_msg>
+						<country_manufacture translate="label">
+							<label>Default Country of Manufacture</label>
+							<frontend_type>select</frontend_type>
+							<sort_order>9</sort_order>
+							<source_model>adminhtml/system_config_source_country
+							</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment>
+								<model>bongointernational/adminhtml_defaultCountry</model>
+							</comment>
+						</country_manufacture>
+						<shipping_type translate="label">
+							<label>Domestic Shipping Calculation</label>
+							<frontend_type>select</frontend_type>
+							<source_model>bongointernational/adminhtml_shippingType
+							</source_model>
+							<sort_order>10</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment><![CDATA[<b>Bongo - Free:</b> No domestic shipping cost will ever be added to any order.<br /><b>Bongo - Per Product:</b> A predefined domestic shipping cost will be added to each product in a customer's order.<br /><b>Shipping Carrier - Method:</b> The shipping carrier/method you select will be used to calculate a real-time domestic shipping cost from the address you setup in <i>Configuration-&#62;Sales-&#62;Shipping Settings-&#62;Origin</i> to the Bongo DC Address you setup below.  Only shipping carriers/methods that are Enabled are shown.<br /><br />The Domestic Shipping Calculation will be combined with the Calculated Shipping Cost returned from Bongo and the resulting total will be displayed in shipping estimates to the customer.]]></comment>
+						</shipping_type>
+						<domestic_shipping translate="label">
+							<label>Default Product Domestic Shipping Cost</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>11</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment><![CDATA[If you leave the Bongo Domestic Shipping Cost field blank on a product, this value will be combined with the Calculated Shipping Cost returned from Bongo and the resulting total will be displayed in shipping estimates.]]></comment>
+						</domestic_shipping>
+						<!-- landed_cost_usd translate="label">
+							<label>Landed Cost in USD</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>12</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment><![CDATA[If you Disable this, the Bongo Landed Cost function will determine the currency based on the customer's shipping country.]]></comment>
+						</landed_cost_usd -->
+						<transfer_type translate="label">
+							<depends>
+								<integration_type>2</integration_type>
+							</depends>
+							<label>Transfer Type</label>
+							<frontend_type>select</frontend_type>
+							<source_model>bongointernational/adminhtml_transferType
+							</source_model>
+							<sort_order>13</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment><![CDATA[<b>International Checkout Button:</b> A button will be displayed below the regular Checkout button in the customer's shopping cart that will take them to Bongo to enter their billing/shipping details and complete payment.<br /><b>Auto Redirect:</b> If you are using the default Magento one-page checkout, the customer will be automatically redirected to Bongo to complete payment after entering their billing/shipping details if the shipping country they choose is selected in the "Allowed Countries" list below.<br /><br />Please note that Bongo does not support checking out with Multiple Addresses at this time.]]></comment>
+						</transfer_type>
+						<shipping_methods translate="label">
+							<label>Available Bongo Shipping Methods</label>
+							<frontend_type>select</frontend_type>
+							<source_model>bongointernational/adminhtml_shippingMethods
+							</source_model>
+							<sort_order>14</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</shipping_methods>
+						<order_confirmation_bongo translate="label">
+							<depends>
+								<integration_type>3</integration_type>
+							</depends>
+							<label>Send customers order tracking email from Bongo?</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>15</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</order_confirmation_bongo>
+						<order_confirmation_magento translate="label">
+							<depends>
+								<integration_type>4</integration_type>
+							</depends>
+							<label>Send customers order confirmation email from Magento?</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>16</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</order_confirmation_magento>
+						<new_account_magento translate="label">
+							<depends>
+								<integration_type>2</integration_type>
+							</depends>
+							<label>Send customers new account welcome email from Magento?</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>17</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</new_account_magento>
+						<include_insurance translate="label">
+							<depends>
+								<integration_type>3</integration_type>
+							</depends>
+							<label>Include Shipping Insurance?</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>18</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</include_insurance>
+						<duty_paid translate="label">
+							<depends>
+								<integration_type>3</integration_type>
+							</depends>
+							<label>Delivery Duty Paid?</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>19</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</duty_paid>
+						<allow_countries translate="label">
+							<label>Allowed Countries</label>
+							<frontend_type>multiselect</frontend_type>
+							<sort_order>20</sort_order>
+							<source_model>adminhtml/system_config_source_country
+							</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<can_be_empty>1</can_be_empty>
+							<comment><![CDATA[During the checkout process, the customer will be shown Bongo as a new shipping method if the shipping country they select is allowed above.]]></comment>
+						</allow_countries>
+					</fields>
+				</config>
+				<currency translate="label">
+					<label>Currency Conversion</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>2</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<currency_conversion translate="label">
+							<label>Currency Conversion</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>1</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment><![CDATA[All totals will be displayed in a currency based on the customer's country as determined by Bongo.<br />A country selector drop-down will be <i>available</i> but <b>not automatically added to the theme</b>.<br />(See installation instructions for more information.)]]></comment>
+						</currency_conversion>
+						<country_selector translate="label">
+							<depends>
+								<currency_conversion>1</currency_conversion>
+							</depends>
+							<label>Country Selector</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>2</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment><![CDATA[A country selector drop-down will be automatically added after the standard language selector drop-down.<br /><b>Not all themes include the language selector drop-down by default.</b>]]></comment>
+						</country_selector>
+						<ip_geolocation translate="label">
+							<depends>
+								<currency_conversion>1</currency_conversion>
+							</depends>
+							<label>IP Geolocation</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>3</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment><![CDATA[Automatically detect the customer's country based on their geographic region as determined by their IP address.  This function uses IP2Location LITE data available from <a href="http://www.ip2location.com" target="_blank">http://www.ip2location.com</a>.]]></comment>
+						</ip_geolocation>
+						<welcome_lightbox translate="label">
+							<depends>
+								<currency_conversion>1</currency_conversion>
+								<ip_geolocation>1</ip_geolocation>
+							</depends>
+							<label>Welcome Lightbox</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>4</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment><![CDATA[Display a Welcome Lightbox when a customer first visits from an international country allowing them to change the country from the auto-detected one as determined by the IP Geolocation function.]]></comment>
+						</welcome_lightbox>
+						<welcome_lightbox_contents translate="label">
+							<depends>
+								<currency_conversion>1</currency_conversion>
+								<ip_geolocation>1</ip_geolocation>
+								<welcome_lightbox>1</welcome_lightbox>
+							</depends>
+							<label>Welcome Lightbox Contents</label>
+							<frontend_type>textarea</frontend_type>
+							<sort_order>5</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment><![CDATA[The text or HTML you enter here will be displayed above the Country Selector drop-down within the Welcome Lightbox.  If using HTML, do not enter code for new lines because they will be automatically inserted.<br />Any occurrence of <b>{COUNTRY}</b> in these Contents will be replaced by the customer's auto-detected country as determined by the IP Geolocation function.]]></comment>
+						</welcome_lightbox_contents>
+					</fields>
+				</currency>
+				<dc translate="label">
+					<label>Bongo DC Address</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>3</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<address1 translate="label">
+							<label>Address 1</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>1</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</address1>
+						<address2 translate="label">
+							<label>Address 2</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>2</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</address2>
+						<city translate="label">
+							<label>City</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>3</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</city>
+						<state translate="label">
+							<label>State</label>
+							<frontend_type>select</frontend_type>
+							<sort_order>4</sort_order>
+							<source_model>adminhtml/system_config_source_allregion
+							</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</state>
+						<zip translate="label">
+							<label>Zip Code</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>5</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</zip>
+						<country translate="label">
+							<label>Country</label>
+							<frontend_type>select</frontend_type>
+							<sort_order>6</sort_order>
+							<source_model>adminhtml/system_config_source_country
+							</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</country>
+					</fields>
+				</dc>
+			</groups>
+		</bongointernational_config>
+		<bongointernational_products translate="label"
+			module="bongointernational">
+			<label>Product Management</label>
+			<tab>bongointernationalsetup</tab>
+			<sort_order>2000</sort_order>
+			<show_in_default>1</show_in_default>
+			<show_in_website>1</show_in_website>
+			<show_in_store>1</show_in_store>
+			<groups>
+				<manual translate="label">
+					<label>Manual Product Export</label>
+					<sort_order>1</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<active translate="label">
+							<label>Export Product CSV File</label>
+							<frontend_type>button</frontend_type>
+							<frontend_model>bongointernational/adminhtml_exportButton
+							</frontend_model>
+							<sort_order>1</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</active>
+					</fields>
+				</manual>
+				<automated translate="label">
+					<label>Automated Product Synchronization</label>
+					<sort_order>2</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<frequency translate="label">
+							<label>Synchronization Frequency</label>
+							<frontend_type>select</frontend_type>
+							<source_model>bongointernational/adminhtml_syncFrequency
+							</source_model>
+							<sort_order>1</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</frequency>
+						<active translate="label">
+							<label>One-Time Automated Synchronization</label>
+							<frontend_type>button</frontend_type>
+							<frontend_model>bongointernational/adminhtml_syncButton
+							</frontend_model>
+							<sort_order>2</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</active>
+					</fields>
+				</automated>
+			</groups>
+		</bongointernational_products>
+		<payment>
+			<groups>
+				<bongointernational translate="label" module="bongointernational">
+					<label>Bongo International Payment</label>
+					<sort_order>1000</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<title translate="label">
+							<label>Title</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>1</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</title>
+					</fields>
+				</bongointernational>
+			</groups>
+		</payment>
+		<carriers>
+			<groups>
+				<bongointernational translate="label" module="bongointernational">
+					<label>Bongo International Shipping</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>1000</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<title translate="label">
+							<label>Title</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>1</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</title>
+						<name translate="label">
+							<label>Economy Method Name</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>2</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</name>
+						<name_express translate="label">
+							<label>Express Method Name</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>3</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</name_express>
+						<sort_order translate="label">
+							<label>Sort Order</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>4</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</sort_order>
+						<showmethod translate="label">
+							<label>Show Method if Not Applicable</label>
+							<frontend_type>select</frontend_type>
+							<sort_order>5</sort_order>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</showmethod>
+						<specificerrmsg translate="label">
+							<label>Displayed Error Message</label>
+							<frontend_type>textarea</frontend_type>
+							<sort_order>6</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</specificerrmsg>
+					</fields>
+				</bongointernational>
+			</groups>
+		</carriers>
+	</sections>
+</config>

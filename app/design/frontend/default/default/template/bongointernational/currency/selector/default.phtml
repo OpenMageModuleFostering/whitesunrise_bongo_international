@@ -1,0 +1,53 @@
+<?php
+if ($this->getIsEnabled ()) :
+	$country_set = true;
+	$countries = $this->getCountries ();
+	$current_country = $this->getCurrentCountry ();
+	
+	if (empty ( $current_country )) {
+		$country_set = false;
+		$current_country = $this->getGeoCountry ();
+		$default_country = $this->getDefaultCountry ();
+	}
+	?>
+<div class="form-language"><label
+	for="bongo-country-selector-default"><?php
+	echo $this->__ ( 'Ship To:' )?></label> <select
+	onchange="window.location.href=this.value"
+	name="bongo-country-selector-default"
+	id="bongo-country-selector-default">
+        <?php
+	foreach ( $countries as $_code => $_country ) :
+		?>
+        <option
+		value="<?php
+		echo $this->getCountrySwitchUrl ( $_code, $_country );
+		?>"
+		<?php
+		if ($_code == $current_country) :
+			?> selected="SELECTED"
+		<?php endif;
+		?>>
+            <?php
+		echo $_country ['name'];
+		?>
+        </option>
+        <?php
+	endforeach
+	;
+	?>
+    </select></div>
+<?php
+	if (! $country_set && $this->getIsGeoEnabled () && ! $this->getIsLightboxEnabled () && ! empty ( $current_country ) && $current_country !== $default_country && array_key_exists ( $current_country, $countries )) :
+		?>
+<script type="text/javascript">
+<!--
+window.location.href="<?php
+		echo $this->getCountrySwitchUrl ( $current_country, $countries [$current_country] );
+		?>";
+// -->
+</script>
+	<?php
+	endif;
+endif;
+?>

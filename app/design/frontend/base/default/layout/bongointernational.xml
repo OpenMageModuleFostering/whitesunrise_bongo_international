@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+	<default>
+		<reference name="before_body_end">
+			<!-- <block type="bongointernational/extend_code" name="default.bongointernational.extend.code"  output="toHtml" template="bongointernational/extend/code.phtml" before="-" /> -->
+			<block type="bongointernational/currency_selector_lightbox" name="default.bongointernational.currency.selector.lightbox"  output="toHtml" template="bongointernational/currency/selector/lightbox.phtml" before="-" />
+		</reference>
+		<reference name="header">
+			<!-- <block type="bongointernational/currency_selector_default" name="default.bongointernational.currency.selector.default" template="bongointernational/currency/selector/default.phtml" before="-" /> -->
+			<block type="core/text_list" name="store_language" as="store_language">
+				<block type="page/switch" name="store_language_standard" as="store_language_standard" template="page/switch/languages.phtml"/>
+				<block type="bongointernational/currency_selector_experimental" name="default.bongointernational.currency.selector.experimental" template="bongointernational/currency/selector/experimental.phtml" after="store_language_standard" />
+			</block>
+		</reference>
+	</default>
+
+    <checkout_cart_index>
+        <reference name="checkout.cart.top_methods">
+            <block type="bongointernational/checkout_link" name="checkout.cart.methods.bongointernational.checkout.top" template="bongointernational/checkout/link.phtml" before="-"/>
+        </reference>
+        
+        <reference name="checkout.cart.methods">
+            <block type="bongointernational/checkout_link" after="checkout.cart.methods.onepage" name="checkout.cart.methods.bongointernational.checkout.bottom" template="bongointernational/checkout/link.phtml"/>
+        </reference>
+        
+        <reference name="before_body_end">
+        	<block type="bongointernational/checkout_form" name="checkout.cart.bongointernational.checkout.form"  output="toHtml" template="bongointernational/checkout/form.phtml" before="-" />
+    	</reference>
+    </checkout_cart_index>
+
+    <checkout_onepage_shippingmethod>
+    	<block type="bongointernational/checkout_form" name="checkout.onepage.shipping_method.bongointernational.checkout.form" output="toHtml" template="bongointernational/checkout/form.phtml" before="-" />
+    	<block type="bongointernational/checkout_redirect" after="checkout.onepage.shipping_method.bongointernational.checkout.form" name="checkout.onepage.shipping_method.bongointernational.redirect" output="toHtml" template="bongointernational/checkout/redirect.phtml" />
+    </checkout_onepage_shippingmethod>
+
+    <onestepcheckout_index_index>
+    	<block type="bongointernational/checkout_form" name="checkout.onepage.shipping_method.bongointernational.checkout.form" output="toHtml" template="bongointernational/checkout/form.phtml" before="-" />
+    	<block type="bongointernational/compatibility_checkout" after="checkout.onepage.shipping_method.bongointernational.checkout.form" name="checkout.onepage.shipping_method.bongointernational.compatibility" output="toHtml" template="bongointernational/compatibility/checkout.phtml" />
+    	<block type="bongointernational/compatibility_checkout_onestepcheckout" after="checkout.onepage.shipping_method.bongointernational.checkout.form" name="checkout.onepage.shipping_method.bongointernational.compatibility.onestepcheckout" output="toHtml" template="bongointernational/compatibility/checkout/onestepcheckout.phtml" />
+    </onestepcheckout_index_index>
+    
+	<firecheckout_index_index>
+    	<block type="bongointernational/checkout_form" name="checkout.onepage.shipping_method.bongointernational.checkout.form" output="toHtml" template="bongointernational/checkout/form.phtml" before="-" />
+    	<block type="bongointernational/compatibility_checkout" after="checkout.onepage.shipping_method.bongointernational.checkout.form" name="checkout.onepage.shipping_method.bongointernational.compatibility" output="toHtml" template="bongointernational/compatibility/checkout.phtml" />
+    	<block type="bongointernational/compatibility_checkout_firecheckout" after="checkout.onepage.shipping_method.bongointernational.checkout.form" name="checkout.onepage.shipping_method.bongointernational.compatibility.firecheckout" output="toHtml" template="bongointernational/compatibility/checkout/firecheckout.phtml" />
+    </firecheckout_index_index>
+    
+	<sales_order_view>
+		<reference name="order_totals">
+			<block type="bongointernational/sales_order_totals" />
+		</reference>
+	</sales_order_view>
+	<sales_order_invoice>
+		<reference name="order_totals">
+			<block type="bongointernational/sales_order_totals" />
+		</reference>
+	</sales_order_invoice>
+	<sales_order_creditmemo>
+		<reference name="order_totals">
+			<block type="bongointernational/sales_order_totals" />
+		</reference>
+	</sales_order_creditmemo>
+	<sales_order_print>
+		<reference name="order_totals">
+			<block type="bongointernational/sales_order_totals" />
+		</reference>
+	</sales_order_print>
+	<sales_order_printinvoice>
+		<reference name="order_totals">
+			<block type="bongointernational/sales_order_totals" />
+		</reference>
+	</sales_order_printinvoice>
+	<sales_order_printcreditmemo>
+		<reference name="order_totals">
+			<block type="bongointernational/sales_order_totals" />
+		</reference>
+	</sales_order_printcreditmemo>
+	<sales_email_order_items>
+		<reference name="order_totals">
+			<block type="bongointernational/sales_order_totals" />
+		</reference>
+	</sales_email_order_items>
+	<sales_email_order_invoice_items>
+		<reference name="order_totals">
+			<block type="bongointernational/sales_order_totals" />
+		</reference>
+	</sales_email_order_invoice_items>
+	<sales_email_order_creditmemo_items>
+		<reference name="order_totals">
+			<block type="bongointernational/sales_order_totals" />
+		</reference>
+	</sales_email_order_creditmemo_items>
+</layout>
