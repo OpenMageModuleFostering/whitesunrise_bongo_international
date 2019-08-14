@@ -90,6 +90,21 @@ class Bongo_International_Block_Checkout_Form extends Mage_Core_Block_Template {
 		return $this->_getQuote ()->getAllVisibleItems ();
 	}
 	
+	public function getItemOptions($item) {
+		$option_types = array ('options', 'additional_options', 'attributes_info' );
+		$combined_options = array ();
+		
+		$options = $item->getTypeInstance ( true )->getOrderOptions ( $item );
+		
+		foreach ( $option_types as $option_type ) {
+			if (! empty ( $options [$option_type] )) {
+				$combined_options = array_merge ( $combined_options, $options [$option_type] );
+			}
+		}
+		
+		return $combined_options;
+	}
+	
 	public function getCurrencyCode() {
 		return Mage::getStoreConfig ( Mage_Directory_Model_Currency::XML_PATH_CURRENCY_DEFAULT );
 	}

@@ -139,6 +139,8 @@ class Bongo_International_CallbackController extends Mage_Core_Controller_Front_
 					$quote->setPaymentMethod ( 'bongointernational' );
 					
 					$quote->setCustomerEmail ( ( string ) $order->customeremail );
+					$quote->setCustomerFirstname ( ( string ) $order->customerfirstname );
+					$quote->setCustomerLastname ( ( string ) $order->customerlastname );
 					
 					$quote->save ();
 					

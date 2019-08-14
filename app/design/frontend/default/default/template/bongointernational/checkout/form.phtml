@@ -20,27 +20,27 @@ if ($this->getIsEnabled ()) :
 <input type="hidden" name="CUSTOM_ORDER_2" value="<?php echo $this->getCustomerId(); ?>" />
 <input type="hidden" name="CUSTOM_ORDER_3" value="" />
 <?php if ($this->getItems()): ?>
-<?php $i=0; foreach ($this->getItems() as $item): $i++; ?>
+<?php 	$i=0; foreach ($this->getItems() as $item): $i++; ?>
 <input type="hidden" name="PRODUCT_ID_<?php echo $i; ?>" value="<?php echo $item->getSku(); ?>" />
 <input type="hidden" name="PRODUCT_NAME_<?php echo $i; ?>" value="<?php echo $item->getName(); ?>" />
 <input type="hidden" name="PRODUCT_PRICE_<?php echo $i; ?>" value="<?php echo $item->getPrice (); ?>" />
 <input type="hidden" name="PRODUCT_Q_<?php echo $i; ?>" value="<?php echo $item->getQty(); ?>" />
 <input type="hidden" name="PRODUCT_SHIPPING_<?php echo $i; ?>" value="0.00" />
-<?php $split_options = ''; $options = $item->getProduct()->getTypeInstance(true)->getOrderOptions($item->getProduct()); ?>
-<?php if (isset($options['options']) && count($options['options'])>0): ?>
-<?php $o=0; foreach ($options['options'] as $option): ?>
-<?php if (empty($option['label']) && empty($option['value'])) { continue; } ?>
-<?php $split_options .= "{$option['label']}: {$option['value']}; "; ?>
-<?php endforeach; ?>
-<?php endif; ?>
-<?php endforeach; ?>
-<?php endif; ?>
-<?php $split_options = !empty($split_options) ? str_split(strip_tags(substr($split_options, 0, -2)), 330) : array(); ?>
-<?php if (!empty($split_options[0])): ?>
+<?php 		$split_options = ''; $options = $this->getItemOptions($item->getProduct()); ?>
+<?php 		if (!empty($options) && count($options)>0): ?>
+<?php 			$o=0; foreach ($options as $option): ?>
+<?php 				if (empty($option['label']) && empty($option['value'])) { continue; } ?>
+<?php 				$split_options .= "{$option['label']}: {$option['value']}; "; ?>
+<?php 			endforeach; ?>
+<?php 		endif; ?>
+<?php 		$split_options = !empty($split_options) ? str_split(strip_tags(substr($split_options, 0, -2)), 330) : array(); ?>
+<?php 		if (!empty($split_options[0])): ?>
 <input type="hidden" name="PRODUCT_CUSTOM_1_<?php echo $i; ?>" value="<?php echo $split_options[0]; ?>" />
-<?php endif; ?>
-<?php if (!empty($split_options[1])): ?>
+<?php 		endif; ?>
+<?php 		if (!empty($split_options[1])): ?>
 <input type="hidden" name="PRODUCT_CUSTOM_2_<?php echo $i; ?>" value="<?php echo $split_options[1]; ?>" />
+<?php 		endif; ?>
+<?php 	endforeach; ?>
 <?php endif; ?>
 <input type="hidden" name="ORDER_CURRENCY" value="<?php echo $this->getCurrencyCode(); ?>" />
 <input type="hidden" name="CUST_FIRST_NAME" value="<?php echo $this->getBillingAddress()->getFirstname(); ?>" />

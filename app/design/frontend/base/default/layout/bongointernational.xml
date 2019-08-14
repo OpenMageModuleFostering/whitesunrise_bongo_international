@@ -29,18 +29,16 @@
     </checkout_cart_index>
 
     <checkout_onepage_shippingmethod>
-    	<block type="bongointernational/checkout_form" name="checkout.onepage.shipping_method.bongointernational.checkout.form" output="toHtml" template="bongointernational/checkout/form.phtml" before="-" />
+    	<block type="bongointernational/checkout_shipping_form" name="checkout.onepage.shipping_method.bongointernational.checkout.form" output="toHtml" template="bongointernational/checkout/form.phtml" before="-" />
     	<block type="bongointernational/checkout_redirect" after="checkout.onepage.shipping_method.bongointernational.checkout.form" name="checkout.onepage.shipping_method.bongointernational.redirect" output="toHtml" template="bongointernational/checkout/redirect.phtml" />
     </checkout_onepage_shippingmethod>
 
     <onestepcheckout_index_index>
-    	<block type="bongointernational/checkout_form" name="checkout.onepage.shipping_method.bongointernational.checkout.form" output="toHtml" template="bongointernational/checkout/form.phtml" before="-" />
     	<block type="bongointernational/compatibility_checkout" after="checkout.onepage.shipping_method.bongointernational.checkout.form" name="checkout.onepage.shipping_method.bongointernational.compatibility" output="toHtml" template="bongointernational/compatibility/checkout.phtml" />
     	<block type="bongointernational/compatibility_checkout_onestepcheckout" after="checkout.onepage.shipping_method.bongointernational.checkout.form" name="checkout.onepage.shipping_method.bongointernational.compatibility.onestepcheckout" output="toHtml" template="bongointernational/compatibility/checkout/onestepcheckout.phtml" />
     </onestepcheckout_index_index>
     
 	<firecheckout_index_index>
-    	<block type="bongointernational/checkout_form" name="checkout.onepage.shipping_method.bongointernational.checkout.form" output="toHtml" template="bongointernational/checkout/form.phtml" before="-" />
     	<block type="bongointernational/compatibility_checkout" after="checkout.onepage.shipping_method.bongointernational.checkout.form" name="checkout.onepage.shipping_method.bongointernational.compatibility" output="toHtml" template="bongointernational/compatibility/checkout.phtml" />
     	<block type="bongointernational/compatibility_checkout_firecheckout" after="checkout.onepage.shipping_method.bongointernational.checkout.form" name="checkout.onepage.shipping_method.bongointernational.compatibility.firecheckout" output="toHtml" template="bongointernational/compatibility/checkout/firecheckout.phtml" />
     </firecheckout_index_index>

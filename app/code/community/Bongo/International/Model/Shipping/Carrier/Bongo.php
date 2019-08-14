@@ -166,12 +166,6 @@ class Bongo_International_Model_Shipping_Carrier_Bongo extends Mage_Shipping_Mod
 				}
 				
 				if (empty ( $request )) {
-					$domestic_shipping = Mage::getSingleton ( 'core/session' )->getBongoDomesticShipping ();
-					
-					if (( float ) $domestic_shipping > 0) {
-						return $domestic_shipping;
-					}
-					
 					$quote = Mage::getModel ( 'sales/quote' );
 					$quote->setData ( ! empty ( $quote_data ) ? $quote_data : Mage::getSingleton ( 'checkout/session' )->getQuote ()->getData () );
 					$address = $quote->getShippingAddress ();
@@ -240,7 +234,6 @@ class Bongo_International_Model_Shipping_Carrier_Bongo extends Mage_Shipping_Mod
 			}
 		}
 		
-		Mage::getSingleton ( 'core/session' )->setBongoDomesticShipping ( $domestic_shipping );
 		return $domestic_shipping;
 	}
 	

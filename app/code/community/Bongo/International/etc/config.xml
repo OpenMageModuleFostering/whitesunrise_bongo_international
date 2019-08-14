@@ -2,7 +2,7 @@
 <config>
 	<modules>
 		<Bongo_International>
-			<version>1.2.1</version>
+			<version>1.3.0</version>
 		</Bongo_International>
 	</modules>
 	<global>
@@ -104,17 +104,17 @@
 				<totals>
 					<bongointernational_duty>
 						<class>bongointernational/total_duty_quote</class>
-						<after>shipping</after>
+						<after>subtotal,discount,shipping,tax</after>
 						<before>grand_total</before>
 					</bongointernational_duty>
 					<bongointernational_tax>
 						<class>bongointernational/total_tax_quote</class>
-						<after>shipping</after>
+						<after>subtotal,discount,shipping,tax</after>
 						<before>grand_total</before>
 					</bongointernational_tax>
 					<bongointernational_insurance>
 						<class>bongointernational/total_insurance_quote</class>
-						<after>shipping</after>
+						<after>subtotal,discount,shipping,tax</after>
 						<before>grand_total</before>
 					</bongointernational_insurance>
 				</totals>
@@ -123,17 +123,17 @@
 				<totals>
 					<bongointernational_duty>
 						<class>bongointernational/total_duty_invoice</class>
-						<after>shipping</after>
+						<after>subtotal,discount,shipping,tax</after>
 						<before>grand_total</before>
 					</bongointernational_duty>
 					<bongointernational_tax>
 						<class>bongointernational/total_tax_invoice</class>
-						<after>shipping</after>
+						<after>subtotal,discount,shipping,tax</after>
 						<before>grand_total</before>
 					</bongointernational_tax>
 					<bongointernational_insurance>
 						<class>bongointernational/total_insurance_invoice</class>
-						<after>shipping</after>
+						<after>subtotal,discount,shipping,tax</after>
 						<before>grand_total</before>
 					</bongointernational_insurance>
 				</totals>
@@ -142,17 +142,17 @@
 				<totals>
 					<bongointernational_duty>
 						<class>bongointernational/total_duty_creditmemo</class>
-						<after>shipping</after>
+						<after>subtotal,discount,shipping,tax</after>
 						<before>grand_total</before>
 					</bongointernational_duty>
 					<bongointernational_tax>
 						<class>bongointernational/total_tax_creditmemo</class>
-						<after>shipping</after>
+						<after>subtotal,discount,shipping,tax</after>
 						<before>grand_total</before>
 					</bongointernational_tax>
 					<bongointernational_insurance>
 						<class>bongointernational/total_insurance_creditmemo</class>
-						<after>shipping</after>
+						<after>subtotal,discount,shipping,tax</after>
 						<before>grand_total</before>
 					</bongointernational_insurance>
 				</totals>
@@ -286,6 +286,18 @@
 		</routers>
 	</frontend>
 	<default>
+        <system>
+            <fpc>
+                <dynamic_blocks><![CDATA[messages,
+global_messages,
+global_notices,
+right.reports.product.viewed,
+default.bongointernational.currency.selector.lightbox,
+default.bongointernational.currency.selector.experimental,
+checkout.onepage.shipping_method.bongointernational.compatibility.firecheckout,
+checkout.onepage.shipping_method.bongointernational.compatibility.onestepcheckout]]></dynamic_blocks>
+			</fpc>
+		</system>
 		<currency>
 			<import>
 				<enabled>1</enabled>

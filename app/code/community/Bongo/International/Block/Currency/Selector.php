@@ -312,15 +312,15 @@ class Bongo_International_Block_Currency_Selector extends Mage_Directory_Block_C
 				require_once (Mage::getModuleDir ( '', 'Bongo_International' ) . DS . 'lib' . DS . 'geoip2.phar');
 				eval ( 'use GeoIp2\Database\Reader;' );
 				
-				$reader = new Reader ( Mage::getBaseDir ( 'var' ) . DS . 'bongointernational' . DS . 'GeoLite2-Country.mmdb' );
+				$reader = new Reader ( Mage::getModuleDir ( '', 'Bongo_International' ) . DS . 'lib' . DS . 'GeoLite2-Country.mmdb' );
 				$record = $reader->country ( $remote_ip );
 				$geo_country = $record->country->isoCode;
 			} else {*/
 				require_once (Mage::getModuleDir ( '', 'Bongo_International' ) . DS . 'lib' . DS . 'IP2Location.php');
 				
-				$loc = new IP2Location ( Mage::getBaseDir ( 'var' ) . DS . 'bongointernational' . DS . 'IP2LOCATION-LITE-DB1.BIN', IP2Location::FILE_IO );
-				//$loc = new IP2Location(Mage::getBaseDir ( 'var' ) . DS . 'bongointernational' . DS . 'IP2LOCATION-LITE-DB1.BIN', IP2Location::SHARED_MEMORY);
-				//$loc = new IP2Location(Mage::getBaseDir ( 'var' ) . DS . 'bongointernational' . DS . 'IP2LOCATION-LITE-DB1.BIN', IP2Location::MEMORY_CACHE);
+				$loc = new IP2Location ( Mage::getModuleDir ( '', 'Bongo_International' ) . DS . 'lib' . DS . 'IP2LOCATION-LITE-DB1.BIN', IP2Location::FILE_IO );
+				//$loc = new IP2Location(Mage::getModuleDir ( '', 'Bongo_International' ) . DS . 'lib' . DS . 'IP2LOCATION-LITE-DB1.BIN', IP2Location::SHARED_MEMORY);
+				//$loc = new IP2Location(Mage::getModuleDir ( '', 'Bongo_International' ) . DS . 'lib' . DS . 'IP2LOCATION-LITE-DB1.BIN', IP2Location::MEMORY_CACHE);
 				
 
 				$geo_country = $loc->lookup ( $remote_ip, IP2Location::COUNTRY_CODE );

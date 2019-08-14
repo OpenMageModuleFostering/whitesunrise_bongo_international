@@ -1,4 +1,5 @@
 <?php if ($this->getIsEnabled ()) : ?>
+<div id="bongo_loading_div"></div>
 <style type="text/css">
 <!--
 #bongo_checkout_payment_method_load {
@@ -10,6 +11,8 @@
 <script type="text/javascript">
 //<![CDATA[
 var __bongo_hide_checkout_review_int;
+var __bongo_fetch_shipping_country_timeout;
+var __bongo_country_id = $('shipping:country_id') != undefined && $('shipping:country_id').value != null && $('shipping:same_as_billing').checked != true ? $('shipping:country_id').value : $('billing:country_id').value;
 
 function bongoHideCheckoutReview(direct) {
 	if (direct != true && checkout.loadWaiting != undefined && checkout.loadWaiting == true) {
@@ -27,10 +30,31 @@ function bongoHideCheckoutReview(direct) {
 	}
 }
 
-function bongoUpdateCheckout() {
-	var country_id = $('shipping:country_id') != undefined && $('shipping:country_id').value != null && $('shipping:same_as_billing').checked != true ? $('shipping:country_id').value : $('billing:country_id').value;
+function bongoUpdateShippingCountry() {
+	__bongo_country_id = $('shipping:country_id') != undefined && $('shipping:country_id').value != null && $('shipping:same_as_billing').checked != true ? $('shipping:country_id').value : $('billing:country_id').value;
 
-	if (__bongo_allowed_countries.indexOf(country_id) !== -1) {
+	bongoUpdateCheckout();
+}
+
+function bongoFetchShippingCountry() {
+	if ((checkout.loadWaiting != undefined && checkout.loadWaiting == true) || $('firecheckout-spinner') != undefined) {
+		__bongo_fetch_shipping_country_timeout = setTimeout(bongoFetchShippingCountry, 500);
+		
+		return false;
+	}
+
+	new Ajax.Request('<?php echo $this->getUrl('bongointernational/ajax/shippingCountry', array('_secure' => true)) ?>', {
+		method: 'get',
+		onComplete: function(xhr)    {
+			__bongo_country_id = xhr.responseText;
+
+			bongoUpdateCheckout();
+		}
+	});
+}
+
+function bongoUpdateCheckout() {
+	if (__bongo_allowed_countries.indexOf(__bongo_country_id) !== -1) {
 		if ($('bongo_checkout_payment_method_load') != undefined) {
 			$('bongo_checkout_payment_method_load').show();
 		} else {
@@ -83,19 +107,61 @@ function bongoUpdateCheckout() {
 	}
 }
 
-if ($('firecheckout-form') != undefined && $('bongo_form') != undefined) {
-	$('billing:country_id').observe('change', bongoUpdateCheckout);
-	$('shipping:country_id').observe('change', bongoUpdateCheckout);
-	$('shipping:same_as_billing').observe('change', bongoUpdateCheckout);
+function bongoCheckSaveStatus () {
+	if($('firecheckout-spinner') != undefined) {
+		setTimeout(bongoCheckSaveStatus, '500');
+	} else {
+		checkout.setLoadWaiting(true);
+        $('review-please-wait').show();
+        
+        new Ajax.Request('<?php echo $this->getUrl('bongointernational/ajax', array('_secure' => true)) ?>', {
+    		method: 'get',
+    		onComplete: function(xhr)    {
+    			$('bongo_loading_div').update(xhr.responseText);
+				$('bongo_form').submit();
+    		}
+    	});
+	}
+}
+
+if ($('firecheckout-form') != undefined) {
+	$('billing:country_id').observe('change', bongoUpdateShippingCountry);
+	$('shipping:country_id').observe('change', bongoUpdateShippingCountry);
+	$('shipping:same_as_billing').observe('change', function () {
+		__bongo_fetch_shipping_country_timeout = setTimeout(bongoFetchShippingCountry, 500);
+	});
+	$('billing-address-select').observe('change', function () {
+		__bongo_fetch_shipping_country_timeout = setTimeout(bongoFetchShippingCountry, 500);
+	});
+	$('shipping-address-select').observe('change', function () {
+		__bongo_fetch_shipping_country_timeout = setTimeout(bongoFetchShippingCountry, 500);
+	});
 	
 	bongoUpdateCheckout();
+
+	var bongo_already_placing_order = false;
 	
 	$$('#review-buttons-container button').first().writeAttribute('onclick', null);
 	$$('#review-buttons-container button').first().observe('click', function() {
-		var country_id = $('shipping:country_id') != undefined && $('shipping:country_id').value != null && $('shipping:same_as_billing').checked != true ? $('shipping:country_id').value : $('billing:country_id').value;
+		if (__bongo_allowed_countries.indexOf(__bongo_country_id) !== -1) {
+			if (bongo_already_placing_order) {
+				return false;
+			}
+			
+			// First validate the form
+            var form = new VarienForm('firecheckout-form');
 
-		if (__bongo_allowed_countries.indexOf(country_id) !== -1) {
-			$('bongo_form').submit();
+            if(!form.validator.validate())  {
+                return false;
+            }
+			
+			bongo_already_placing_order = true;
+			
+			checkout.update(checkout.urls.billing_address, {
+                review: 1
+            });
+			
+			setTimeout(bongoCheckSaveStatus, '500');
 			
 			return false;
 		} else {

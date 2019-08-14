@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<config>
+    <placeholders>
+        <bongointernational_currency_selector_lightbox>
+            <block>bongointernational/currency_selector_lightbox</block>
+            <name>default.bongointernational.currency.selector.lightbox</name>
+            <placeholder>BONGOINTERNATIONAL_CURRENCY_SELECTOR_LIGHTBOX</placeholder>
+            <container>Bongo_International_Model_Container_Currency_Selector_Lightbox</container>
+            <cache_life>0</cache_life>
+            <cache_lifetime>0</cache_lifetime>
+        </bongointernational_currency_selector_lightbox>
+        <bongointernational_currency_selector_experimental>
+            <block>bongointernational/currency_selector_experimental</block>
+            <name>default.bongointernational.currency.selector.experimental</name>
+            <placeholder>BONGOINTERNATIONAL_CURRENCY_SELECTOR_EXPERIMENTAL</placeholder>
+            <container>Bongo_International_Model_Container_Currency_Selector_Experimental</container>
+            <cache_life>0</cache_life>
+            <cache_lifetime>0</cache_lifetime>
+        </bongointernational_currency_selector_experimental>
+        <bongointernational_compatibility_checkout_onestepcheckout>
+            <block>bongointernational/compatibility_checkout_onestepcheckout</block>
+            <name>checkout.onepage.shipping_method.bongointernational.compatibility.onestepcheckout</name>
+            <placeholder>BONGOINTERNATIONAL_COMPATIBILITY_CHECKOUT_ONESTEPCHECKOUT</placeholder>
+            <container>Bongo_International_Model_Container_Compatibility_Checkout_Firecheckout</container>
+            <cache_life>0</cache_life>
+            <cache_lifetime>0</cache_lifetime>
+        </bongointernational_compatibility_checkout_onestepcheckout>
+        <bongointernational_compatibility_checkout_firecheckout>
+            <block>bongointernational/compatibility_checkout_firecheckout</block>
+            <name>checkout.onepage.shipping_method.bongointernational.compatibility.firecheckout</name>
+            <placeholder>BONGOINTERNATIONAL_COMPATIBILITY_CHECKOUT_FIRECHECKOUT</placeholder>
+            <container>Bongo_International_Model_Container_Compatibility_Checkout_Firecheckout</container>
+            <cache_life>0</cache_life>
+            <cache_lifetime>0</cache_lifetime>
+        </bongointernational_compatibility_checkout_firecheckout>
+    </placeholders>
+</config>
